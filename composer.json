@@ -1,0 +1,29 @@
+{
+    "name":        "hostnet/path-composer-plugin-lib",
+    "description": "Publish vendor_dir and base_dir as constants",
+    "type":        "composer-plugin",
+    "license":     "MIT",
+    "authors": [
+        {
+            "name":  "Hidde Boomsma",
+            "email": "hboomsma@hostnet.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Hostnet\\Component\\Path\\": "src"
+        }
+    },
+    "require": {
+        "php":                 ">=5.6",
+        "composer-plugin-api": "^1.0"
+    },
+    "extra": {
+        "class": "Hostnet\\Component\\Path\\Plugin"
+    },
+    "require-dev": {
+        "composer/composer": "@alpha",
+        "phpunit/phpunit":   "^5.2",
+        "squizlabs/php_codesniffer": "^2.5"
+    }
+}
