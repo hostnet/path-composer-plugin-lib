@@ -5,8 +5,9 @@ use Composer\Composer;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\ScriptEvents;
+use Composer\EventDispatcher\EventSubscriberInterface;
 
-class Plugin implements PluginInterface
+class Plugin implements PluginInterface, EventSubscriberInterface
 {
     /**
      * @var Composer
@@ -29,7 +30,7 @@ class Plugin implements PluginInterface
         $this->io       = $io;
     }
 
-    public function onPreDumpAutoload()
+    public function onPreAutoloadDump()
     {
         $vendor_dir = str_replace('\'', '\\\'', realpath($this->composer->getConfig()->get('vendor-dir')));
         $base_dir   = str_replace('\'', '\\\'', getcwd());

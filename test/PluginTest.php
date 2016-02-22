@@ -24,7 +24,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testOnPreDumpAutoload()
+    public function testOnPreAutoloadDump()
     {
         $config   = new Config(false, __DIR__ . '/../');
         $composer = new Composer();
@@ -33,7 +33,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         $this->plugin->activate($composer, $io);
 
         // Test if Path.php will be created with valid contents
-        $this->plugin->onPreDumpAutoload();
+        $this->plugin->onPreAutoloadDump();
 
         $this->assertEquals(realpath(__DIR__ . '/..'), Path::BASE_DIR);
         $this->assertEquals(realpath(__DIR__ . '/../vendor'), Path::VENDOR_DIR);
