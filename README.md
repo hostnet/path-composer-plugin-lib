@@ -26,9 +26,9 @@ How do I use it?
 ----------------
 ```php
 <?php
-namespace MyVendor/MyApp;
+namespace MyVendor\MyApp;
 
-use Hostnet/Component/Path/Path;
+use Hostnet\Component\Path\Path;
 
 class ClassInNeed
 {
