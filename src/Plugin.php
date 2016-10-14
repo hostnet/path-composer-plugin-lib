@@ -34,8 +34,13 @@ class Plugin implements PluginInterface, EventSubscriberInterface
     {
         $vendor_dir = str_replace('\'', '\\\'', realpath($this->composer->getConfig()->get('vendor-dir')));
         $base_dir   = str_replace('\'', '\\\'', getcwd());
+
+        $path = false === strpos(__DIR__, $vendor_dir)
+            ? __DIR__ . '/'
+            : $vendor_dir . '/hostnet/path-composer-plugin-lib/src/';
+
         file_put_contents(
-            __DIR__ . '/Path.php',
+            $path . 'Path.php',
             <<<EOF
 <?php
 namespace Hostnet\Component\Path;
