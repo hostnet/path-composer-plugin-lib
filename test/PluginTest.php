@@ -7,7 +7,7 @@ use Composer\IO\NullIO;
 use Composer\Script\ScriptEvents;
 
 /**
- * @covers Hostnet\Component\Path\Plugin
+ * @covers \Hostnet\Component\Path\Plugin
  */
 class PluginTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,9 +16,14 @@ class PluginTest extends \PHPUnit_Framework_TestCase
      */
     private $plugin;
 
+    protected function setUp()
+    {
+        $this->plugin = new Plugin();
+    }
+
     public function testGetSubscribedEvents()
     {
-        $this->assertSame(
+        self::assertSame(
             [ScriptEvents::PRE_AUTOLOAD_DUMP => 'onPreAutoloadDump'],
             $this->plugin->getSubscribedEvents()
         );
@@ -35,12 +40,12 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         // Test if Path.php will be created with valid contents
         $this->plugin->onPreAutoloadDump();
 
-        $this->assertEquals(realpath(__DIR__ . '/..'), Path::BASE_DIR);
-        $this->assertEquals(realpath(__DIR__ . '/../vendor'), Path::VENDOR_DIR);
+        self::assertEquals(realpath(__DIR__ . '/..'), Path::BASE_DIR);
+        self::assertEquals(realpath(__DIR__ . '/../vendor'), Path::VENDOR_DIR);
     }
 
-    protected function setUp()
+    protected function tearDown()
     {
-        $this->plugin = new Plugin();
+        @unlink(__DIR__ . '/../src/Path.php');
     }
 }
