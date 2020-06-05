@@ -22,7 +22,7 @@
         "class": "Hostnet\\Component\\Path\\Plugin"
     },
     "require-dev": {
-        "composer/composer": "@alpha",
+        "composer/composer": "^1.0",
         "phpunit/phpunit":   "^5.2",
         "squizlabs/php_codesniffer": "^2.5"
     }
