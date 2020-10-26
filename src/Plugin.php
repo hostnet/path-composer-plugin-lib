@@ -30,16 +30,34 @@ class Plugin implements PluginInterface, EventSubscriberInterface
         $this->io       = $io;
     }
 
-    public function onPreAutoloadDump()
+    private function getVendorDir()
     {
-        $vendor_dir = str_replace('\'', '\\\'', realpath($this->composer->getConfig()->get('vendor-dir')));
-        $base_dir   = str_replace('\'', '\\\'', getcwd());
+        return str_replace('\'', '\\\'', realpath($this->composer->getConfig()->get('vendor-dir')));
+    }
+
+    private function getBaseDir()
+    {
+        return str_replace('\'', '\\\'', getcwd());
+    }
+
+    private function getPath()
+    {
+        $vendor_dir = $this->getVendorDir();
 
         if (0 === strpos(__DIR__, $vendor_dir) || strlen(__DIR__) - 4 === strpos(__DIR__, '/src')) {
             $path = __DIR__ . '/';
         } else {
             $path = $vendor_dir . '/hostnet/path-composer-plugin-lib/src/';
         }
+
+        return $path;
+    }
+
+    public function onPreAutoloadDump()
+    {
+        $path = $this->getPath();
+        $vendor_dir = $this->getVendorDir();
+        $base_dir = $this->getBaseDir();
 
         file_put_contents(
             $path . 'Path.php',
@@ -55,5 +73,14 @@ class Path
 
 EOF
         );
+    }
+
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+        unlink($this->getPath() . 'Path.php');
     }
 }
