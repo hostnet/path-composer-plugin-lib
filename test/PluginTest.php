@@ -5,23 +5,24 @@ use Composer\Composer;
 use Composer\Config;
 use Composer\IO\NullIO;
 use Composer\Script\ScriptEvents;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\Path\Plugin
  */
-class PluginTest extends \PHPUnit_Framework_TestCase
+class PluginTest extends TestCase
 {
     /**
      * @var Plugin
      */
     private $plugin;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->plugin = new Plugin();
     }
 
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         self::assertSame(
             [ScriptEvents::PRE_AUTOLOAD_DUMP => 'onPreAutoloadDump'],
@@ -29,7 +30,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testOnPreAutoloadDump()
+    public function testOnPreAutoloadDump(): void
     {
         $config   = new Config(false, __DIR__ . '/../');
         $composer = new Composer();
@@ -44,7 +45,7 @@ class PluginTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(realpath(__DIR__ . '/../vendor'), Path::VENDOR_DIR);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         @unlink(__DIR__ . '/../src/Path.php');
     }
